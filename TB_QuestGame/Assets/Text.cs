@@ -219,6 +219,10 @@ namespace TB_QuestGame
                 $"\tPlayer has Pet: {gameTraveler.HasPet}\n" +
                 $"\tPlayer Pet's Name: {gameTraveler.PetName}\n" +
                 $"\tPlayer Pet's Age: {gameTraveler.PetAge}\n" +
+                " \n" +
+                $"\tExperience Points: {gameTraveler.ExperiencePoints}\n" +
+                $"\tHealth: {gameTraveler.Health}\n" +
+                $"\tLives: {gameTraveler.Lives}\n" +
                 " \n";
 
             return messageBoxText;
@@ -282,19 +286,19 @@ namespace TB_QuestGame
 
             string mapLocationList = null;
 
-                foreach (MapLocation mapLocation in mapLocations)
+            foreach (MapLocation mapLocation in mapLocations)
+            {
+                if (mapLocation.MapLocationID != gamePlayer.MapLocationID)
                 {
-                    if (mapLocation.MapLocationID != gamePlayer.MapLocationID)
-                    {
                     mapLocationList +=
                     $"{mapLocation.MapLocationID}".PadRight(10) +
                     $"{mapLocation.CommonName}".PadRight(30) +
                     $"{mapLocation.Accessable}".PadRight(10) +
-                    Environment.NewLine; 
-                    }
+                    Environment.NewLine;
                 }
+            }
 
-                messageBoxText += mapLocationList;
+            messageBoxText += mapLocationList;
 
             return messageBoxText;
         }

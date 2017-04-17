@@ -83,6 +83,19 @@ namespace TB_QuestGame
                             "daring enough to look them in the eye.",
                 Accessable = true,
                 ExperiencePoints = 30
+            },
+                                                new MapLocation
+            {
+                CommonName = "Castle of Aaaargh",
+                MapLocationID = 5,
+                KingdomLocation = "P-6, SS-3978, G-2976, LS-3976",
+                Description = "This old castle is in ruins. Located just south of Camelot, " +
+                              "not many people venture to these ruins despite their close proximity " +
+                              "for fear of the two who do reside within the crumbling walls. ",
+                GeneralContents = "The walls of this old castle are all but destroyed. The area is " +
+                             "barren save a guarded plank bridge, leading to a chest. ",
+                Accessable = true,
+                ExperiencePoints = 30
             }
         };
     }
