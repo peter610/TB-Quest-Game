@@ -11,6 +11,16 @@ namespace TB_QuestGame
     /// </summary>
     public class ConsoleView
     {
+        #region ENUMS
+
+        private enum ViewStatus
+        {
+            TravelerInitialization,
+            PlayingGame
+        }
+
+        #endregion
+
         #region FIELDS
 
         //
@@ -19,6 +29,7 @@ namespace TB_QuestGame
         Player _gamePlayer;
         Kingdom _gameKingdom;
 
+        ViewStatus _viewStatus;
         #endregion
 
         #region PROPERTIES
@@ -63,6 +74,7 @@ namespace TB_QuestGame
             DisplayMessageBox(messageBoxHeaderText, messageBoxText);
             DisplayMenuBox(menu);
             DisplayInputBox();
+            DisplayStatusBox();
         }
 
         /// <summary>
@@ -263,7 +275,7 @@ namespace TB_QuestGame
             ConsoleWindowControl.DisableResize();
             ConsoleWindowControl.DisableMaximize();
             ConsoleWindowControl.DisableMinimize();
-            Console.Title = "The Aion Project";
+            Console.Title = "Dark Times";
 
             //
             // set the default console window values
@@ -361,6 +373,64 @@ namespace TB_QuestGame
                 row++;
             }
 
+        }
+
+        /// <summary>
+        /// draw the status box on the game screen
+        /// </summary>
+        public void DisplayStatusBox()
+        {
+            Console.BackgroundColor = ConsoleTheme.InputBoxBackgroundColor;
+            Console.ForegroundColor = ConsoleTheme.InputBoxBorderColor;
+
+            //
+            // display the outline for the status box
+            //
+            ConsoleWindowHelper.DisplayBoxOutline(
+                ConsoleLayout.StatusBoxPositionTop,
+                ConsoleLayout.StatusBoxPositionLeft,
+                ConsoleLayout.StatusBoxWidth,
+                ConsoleLayout.StatusBoxHeight);
+
+            //
+            // display the text for the status box if playing game
+            //
+            if (_viewStatus == ViewStatus.PlayingGame)
+            {
+                //
+                // display status box header with title
+                //
+                Console.BackgroundColor = ConsoleTheme.StatusBoxBorderColor;
+                Console.ForegroundColor = ConsoleTheme.StatusBoxForegroundColor;
+                Console.SetCursorPosition(ConsoleLayout.StatusBoxPositionLeft + 2, ConsoleLayout.StatusBoxPositionTop + 1);
+                Console.Write(ConsoleWindowHelper.Center("Game Stats", ConsoleLayout.StatusBoxWidth - 4));
+                Console.BackgroundColor = ConsoleTheme.StatusBoxBackgroundColor;
+                Console.ForegroundColor = ConsoleTheme.StatusBoxForegroundColor;
+
+                //
+                // display stats
+                //
+                int startingRow = ConsoleLayout.StatusBoxPositionTop + 3;
+                int row = startingRow;
+                foreach (string statusTextLine in Text.StatusBox(_gamePlayer, _gameKingdom))
+                {
+                    Console.SetCursorPosition(ConsoleLayout.StatusBoxPositionLeft + 3, row);
+                    Console.Write(statusTextLine);
+                    row++;
+                }
+            }
+            else
+            {
+                //
+                // display status box header without header
+                //
+                Console.BackgroundColor = ConsoleTheme.StatusBoxBorderColor;
+                Console.ForegroundColor = ConsoleTheme.StatusBoxForegroundColor;
+                Console.SetCursorPosition(ConsoleLayout.StatusBoxPositionLeft + 2, ConsoleLayout.StatusBoxPositionTop + 1);
+                Console.Write(ConsoleWindowHelper.Center("", ConsoleLayout.StatusBoxWidth - 4));
+                Console.BackgroundColor = ConsoleTheme.StatusBoxBackgroundColor;
+                Console.ForegroundColor = ConsoleTheme.StatusBoxForegroundColor;
+            }
         }
 
         /// <summary>
@@ -504,6 +574,7 @@ namespace TB_QuestGame
             //
             DisplayGamePlayScreen("Mission Initialization - Complete", Text.InitializeMissionEchoPlayerInfo(traveler), ActionMenu.MissionIntro, "");
             GetContinueKey();
+            _viewStatus = ViewStatus.PlayingGame;
 
             return traveler;
         }

@@ -11,15 +11,22 @@ namespace TB_QuestGame
         #region ***** define all lists to be maintained by the Kingdom object *****
 
         //
-        // list of all map locations
+        // list of all map locations and game objects
         //
         private List<MapLocation> _mapLocations;
+        private List<GameObject> _gameObjects;
 
         public List<MapLocation> MapLocations
         {
             get { return _mapLocations; }
             set { _mapLocations = value; }
         }
+        public List<GameObject> GameObjects
+        {
+            get { return _gameObjects; }
+            set { _gameObjects = value; }
+        }
+
 
         #endregion
 
@@ -45,7 +52,8 @@ namespace TB_QuestGame
         /// </summary>
         private void IntializeKingdom()
         {
-            _mapLocations = GameObjects.MapLocations;
+            _mapLocations = KingdomObjects.MapLocations;
+            _gameObjects = KingdomObjects.gameObjects;
         }
 
         #endregion
@@ -154,6 +162,90 @@ namespace TB_QuestGame
             return mapLocation;
         }
 
+        /// <summary>
+        /// validate game object id number in current location
+        /// </summary>
+        /// <param name="gameObjectId"></param>
+        /// <returns>is Id valid</returns>
+        public bool IsValidGameObjectByLocationId(int gameObjectId, int currentMapLocation)
+        {
+            List<int> gameObjectIds = new List<int>();
+
+            //
+            // create a list of game object ids in current map location
+            //
+            foreach (GameObject gameObject in _gameObjects)
+            {
+                if (gameObject.MapLocationId == currentMapLocation)
+                {
+                    gameObjectIds.Add(gameObject.Id);
+                }
+
+            }
+
+            //
+            // determine if the game object id is a valid id and return the result
+            //
+            if (gameObjectIds.Contains(gameObjectId))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// get a game object using an Id
+        /// </summary>
+        /// <param name="Id">game object Id</param>
+        /// <returns>requested game object</returns>
+        public GameObject GetGameObjectById(int Id)
+        {
+            GameObject gameObjectToReturn = null;
+
+            //
+            // run through the game object list and grab the correct one
+            //
+            foreach (GameObject gameObject in _gameObjects)
+            {
+                if (gameObject.Id == Id)
+                {
+                    gameObjectToReturn = gameObject;
+                }
+            }
+
+            //
+            // the specified ID was not found in the kingdom
+            // throw an exception
+            //
+            if (gameObjectToReturn == null)
+            {
+                string feedbackMessage = $"The Game Object ID {Id} does not exist in the Kingdom.";
+                throw new ArgumentException(Id.ToString(), feedbackMessage);
+            }
+
+            return gameObjectToReturn;
+        }
+
+        public List<GameObject> GetGameObjectsByMapLocationId(int mapLocationId)
+        {
+            List<GameObject> gameObjects = new List<GameObject>();
+
+            //
+            // run through the game object list and grab all that are in the current map location
+            //
+            foreach (GameObject gameObject in _gameObjects)
+            {
+                if (gameObject.MapLocationId == mapLocationId)
+                {
+                    gameObjects.Add(gameObject);
+                }
+            }
+
+            return gameObjects;
+        }
 
         #endregion
     }

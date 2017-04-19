@@ -71,7 +71,7 @@ namespace TB_QuestGame
             // display splash screen
             //
             _playingGame = _gameConsoleView.DisplaySpashScreen();
-
+            
             //
             // player chooses to quit
             //
@@ -200,6 +200,7 @@ namespace TB_QuestGame
                 // update experience points for visiting locations
                 //
                 _gamePlayer.ExperiencePoints += _currentLocation.ExperiencePoints;
+                _gameConsoleView.DisplayStatusBox();
             }
         }
 

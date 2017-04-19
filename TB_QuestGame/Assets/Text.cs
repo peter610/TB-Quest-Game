@@ -219,10 +219,6 @@ namespace TB_QuestGame
                 $"\tPlayer has Pet: {gameTraveler.HasPet}\n" +
                 $"\tPlayer Pet's Name: {gameTraveler.PetName}\n" +
                 $"\tPlayer Pet's Age: {gameTraveler.PetAge}\n" +
-                " \n" +
-                $"\tExperience Points: {gameTraveler.ExperiencePoints}\n" +
-                $"\tHealth: {gameTraveler.Health}\n" +
-                $"\tLives: {gameTraveler.Lives}\n" +
                 " \n";
 
             return messageBoxText;
