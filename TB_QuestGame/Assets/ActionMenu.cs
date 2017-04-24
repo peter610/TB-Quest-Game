@@ -11,6 +11,16 @@ namespace TB_QuestGame
     /// </summary>
     public static class ActionMenu
     {
+        public enum CurrentMenu
+        {
+            MissionIntro,
+            InitializeMission,
+            MainMenu,
+            AdminMenu
+        }
+
+        public static CurrentMenu currentMenu = CurrentMenu.MainMenu;
+
         public static Menu MissionIntro = new Menu()
         {
             MenuName = "MissionIntro",
@@ -42,9 +52,21 @@ namespace TB_QuestGame
                     { '3', PlayerAction.LookAt },
                     { '4', PlayerAction.Travel },
                     { '5', PlayerAction.PlayerLocationsVisited },
-                    { '6', PlayerAction.ListMapLocations },
-                    { '7', PlayerAction.ListGameObjects },
+                    { '6', PlayerAction.AdminMenu },
+                    //{ '7', PlayerAction.ListGameObjects },
                     { '0', PlayerAction.Exit }
+                }
+        };
+
+        public static Menu AdminMenu = new Menu()
+        {
+            MenuName = "AdminMenu",
+            MenuTitle = "Admin Menu",
+            MenuChoices = new Dictionary<char, PlayerAction>()
+                {
+                    { '1', PlayerAction.ListMapLocations },
+                    { '2', PlayerAction.ListGameObjects },
+                    { '0', PlayerAction.ReturnToMainMenu }
                 }
         };
 

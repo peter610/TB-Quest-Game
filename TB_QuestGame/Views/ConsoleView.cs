@@ -597,7 +597,7 @@ namespace TB_QuestGame
         public void DisplayListOfMapLocations()
         {
             DisplayGamePlayScreen("List: Map Locations", Text.ListMapLocations
-                (_gameKingdom.MapLocations), ActionMenu.MainMenu, "");
+                (_gameKingdom.MapLocations), ActionMenu.AdminMenu, "");
         }
 
         /// <summary>
@@ -605,8 +605,19 @@ namespace TB_QuestGame
         /// </summary>
         public void DisplayLookAround()
         {
-            MapLocation currentMapLocation = _gameKingdom.GetMapLocationById
-                (_gamePlayer.MapLocationID);
+            //
+            // get current map location
+            //
+            MapLocation currentMapLocation = _gameKingdom.GetMapLocationById(_gamePlayer.MapLocationID);
+
+            //
+            //get list of game objects in current map location
+            //
+            List<GameObject> gameObjectsInCurrentMapLocation = _gameKingdom.GetGameObjectsByMapLocationId(_gamePlayer.MapLocationID);
+
+            string messageBoxText = Text.LookAround(currentMapLocation) + Environment.NewLine + Environment.NewLine;
+            messageBoxText += Text.GameObjectsChooseList(gameObjectsInCurrentMapLocation);
+
             DisplayGamePlayScreen("Current Location", Text.LookAround(currentMapLocation), ActionMenu.MainMenu, "");
         }
 
@@ -731,7 +742,7 @@ namespace TB_QuestGame
 
         public void DisplayListOfAllGameObjects()
         {
-            DisplayGamePlayScreen("List: Game Objects", Text.ListAllGameObjects(_gameKingdom.GameObjects), ActionMenu.MainMenu, "");
+            DisplayGamePlayScreen("List: Game Objects", Text.ListAllGameObjects(_gameKingdom.GameObjects), ActionMenu.AdminMenu, "");
         }
         #endregion
 

@@ -53,13 +53,15 @@
     <Compile Include="ConsoleUtilities\ConsoleWindowHelper.cs" />
     <Compile Include="Controllers\Controller.cs" />
     <Compile Include="Models\Character.cs" />
+    <Compile Include="Models\Enum\PlayerAction.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Models\Enum\PlayerObjectType.cs" />
     <Compile Include="Models\GameObject.cs" />
     <Compile Include="Models\Kingdom.cs" />
     <Compile Include="Models\MapLocations.cs" />
     <Compile Include="Models\Menu.cs" />
     <Compile Include="Models\Player.cs" />
-    <Compile Include="Models\PlayerAction.cs" />
     <Compile Include="Models\PlayerObject.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

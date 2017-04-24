@@ -71,7 +71,7 @@ namespace TB_QuestGame
             // display splash screen
             //
             _playingGame = _gameConsoleView.DisplaySpashScreen();
-            
+
             //
             // player chooses to quit
             //
@@ -110,7 +110,14 @@ namespace TB_QuestGame
                 //
                 // get next game action from player
                 //
-                travelerActionChoice = _gameConsoleView.GetActionMenuChoice(ActionMenu.MainMenu);
+                if (ActionMenu.currentMenu == ActionMenu.CurrentMenu.MainMenu)
+                {
+                    travelerActionChoice = _gameConsoleView.GetActionMenuChoice(ActionMenu.MainMenu);
+                }
+                else if (ActionMenu.currentMenu == ActionMenu.CurrentMenu.AdminMenu)
+                {
+                    travelerActionChoice = _gameConsoleView.GetActionMenuChoice(ActionMenu.AdminMenu);
+                }
 
                 //
                 // choose an action based on the user's menu choice
@@ -156,6 +163,18 @@ namespace TB_QuestGame
 
                     case PlayerAction.LookAt:
                         LookAtAction();
+                        break;
+
+                    case PlayerAction.AdminMenu:
+                        ActionMenu.currentMenu = ActionMenu.CurrentMenu.AdminMenu;
+                        _gameConsoleView.DisplayGamePlayScreen("Admin Menu", "Select an operation from the menu.",
+                            ActionMenu.AdminMenu, "");
+                        break;
+
+                    case PlayerAction.ReturnToMainMenu:
+                        ActionMenu.currentMenu = ActionMenu.CurrentMenu.MainMenu;
+                        _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrentLocationInfo
+                            (_currentLocation), ActionMenu.MainMenu, "");
                         break;
 
                     case PlayerAction.Exit:
@@ -221,7 +240,7 @@ namespace TB_QuestGame
             _gamePlayer.Lives = 3;
 
         }
-        
+
         private void UpdateGameStatus()
         {
             if (!_gamePlayer.HasVisited(_currentLocation.MapLocationID))

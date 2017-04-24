@@ -336,7 +336,7 @@ namespace TB_QuestGame
 
             //if (gameObject is PlayerObject)
             //{
-            //    PlayerObject travelerObject = gameObject as PlayerObject;
+                PlayerObject playerObject = gameObject as PlayerObject;
 
             //    messageBoxText += $"The {travelerObject.Name} has a value of {travelerObject.Value} and ";
 
