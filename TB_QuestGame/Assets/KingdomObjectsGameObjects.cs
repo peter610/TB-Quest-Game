@@ -14,7 +14,7 @@ namespace TB_QuestGame
             {
                 Id = 1,
                 Name = "Xoran Sapphire",
-                MapLocationId = 2,
+                MapLocationId = 6,
                 Description = "One of the jewels that had adorned the ancient crown. It" +
                 " glows with a brilliant blue light.",
                 Type = PlayerObjectType.Crown
@@ -103,22 +103,12 @@ namespace TB_QuestGame
             new PlayerObject
             {
                 Id = 11,
-                Name = "",
+                Name = "Vial of the Elderblood",
                 MapLocationId = 8,
-                Description = "" +
-                "",
+                Description = "This blood is believed to have come from an important ancestor of the elves. " +
+                "Bearers of the Elderblood are said to be able to travel through time and space at will.  ",
                 Type = PlayerObjectType.Quest
-            },
-            new PlayerObject
-            {
-                Id = 12,
-                Name = "",
-                MapLocationId = 6,
-                Description = "" +
-                "",
-                Type = PlayerObjectType.Quest
-            },
-
+            }
         };
     }
 }

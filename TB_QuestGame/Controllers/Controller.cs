@@ -150,6 +150,14 @@ namespace TB_QuestGame
                         _gameConsoleView.DisplayLocationsVisited();
                         break;
 
+                    case PlayerAction.ListGameObjects:
+                        _gameConsoleView.DisplayListOfAllGameObjects();
+                        break;
+
+                    case PlayerAction.LookAt:
+                        LookAtAction();
+                        break;
+
                     case PlayerAction.Exit:
                         _playingGame = false;
                         break;
@@ -163,6 +171,33 @@ namespace TB_QuestGame
             // close the application
             //
             Environment.Exit(1);
+        }
+
+        /// <summary>
+        /// process the Look At action
+        /// </summary>
+        private void LookAtAction()
+        {
+            //
+            // display a list of game objects in map location and get a player choice
+            //
+            int gameObjectToLookAtId = _gameConsoleView.DisplayGetGameObjectToLookAt();
+
+            //
+            // display game object info
+            //
+            if (gameObjectToLookAtId != 0)
+            {
+                //
+                // get the game object from the kingdom
+                //
+                GameObject gameObject = _gameKingdom.GetGameObjectById(gameObjectToLookAtId);
+
+                //
+                // display information for the object chosen
+                //
+                _gameConsoleView.DisplayGameObjectInfo(gameObject);
+            }
         }
 
         /// <summary>

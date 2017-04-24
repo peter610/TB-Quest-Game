@@ -233,7 +233,8 @@ namespace TB_QuestGame
                 //
                 //display table header
                 //
-                "ID".PadRight(10) + "Name".PadRight(30) + "\n";
+                "ID".PadRight(10) + "Name".PadRight(30) + "\n" +
+                "---".PadRight(10) + "----------------------".PadRight(30) + "\n";
 
             //
             //display all locations
@@ -248,6 +249,110 @@ namespace TB_QuestGame
             }
 
             messageBoxText += mapLocationList;
+
+            return messageBoxText;
+        }
+
+        public static string ListAllGameObjects(IEnumerable<GameObject> gameObjects)
+        {
+            //
+            // display table name and column headers
+            //
+            string messageBoxText =
+                "Game Objects\n" +
+                " \n" +
+
+                //
+                // display table header
+                //
+                "ID".PadRight(10) +
+                "Name".PadRight(30) +
+                "Map Location Id".PadRight(10) + "\n" +
+                "---".PadRight(10) +
+                "----------------------".PadRight(30) +
+                "----------------------".PadRight(10) + "\n";
+
+            //
+            // display all player objects in rows
+            //
+            string gameObjectRows = null;
+            foreach (GameObject gameObject in gameObjects)
+            {
+                gameObjectRows +=
+                    $"{gameObject.Id}".PadRight(10) +
+                    $"{gameObject.Name}".PadRight(30) +
+                    $"{gameObject.MapLocationId}".PadRight(10) +
+                    Environment.NewLine;
+            }
+
+            messageBoxText += gameObjectRows;
+
+            return messageBoxText;
+        }
+
+        public static string GameObjectsChooseList(IEnumerable<GameObject> gameObjects)
+        {
+            //
+            // display table name and column headers
+            //
+            string messageBoxText =
+                "Game Objects\n" +
+                " \n" +
+
+                //
+                // display table header
+                //
+                "ID".PadRight(10) +
+                "Name".PadRight(30) + "\n" +
+                "---".PadRight(10) +
+                "----------------------".PadRight(30) + "\n";
+
+            //
+            // display all player objects in rows
+            //
+            string gameObjectRows = null;
+            foreach (GameObject gameObject in gameObjects)
+            {
+                gameObjectRows +=
+                    $"{gameObject.Id}".PadRight(10) +
+                    $"{gameObject.Name}".PadRight(30) +
+                    Environment.NewLine;
+            }
+
+            messageBoxText += gameObjectRows;
+
+            return messageBoxText;
+        }
+
+        public static string LookAt(GameObject gameObject)
+        {
+            string messageBoxText = "";
+
+            messageBoxText =
+                $"{gameObject.Name}\n" +
+                " \n" +
+                gameObject.Description + " \n" +
+                " \n";
+
+            //if (gameObject is PlayerObject)
+            //{
+            //    PlayerObject travelerObject = gameObject as PlayerObject;
+
+            //    messageBoxText += $"The {travelerObject.Name} has a value of {travelerObject.Value} and ";
+
+            //    if (travelerObject.CanInventory)
+            //    {
+            //        messageBoxText += "may be added to your inventory.";
+            //    }
+            //    else
+            //    {
+            //        messageBoxText += "may not be added to your inventory.";
+            //    }
+            //}
+            //else
+            //{
+            //    messageBoxText += $"The {gameObject.Name} may not be added to your inventory.";
+            //}
 
             return messageBoxText;
         }

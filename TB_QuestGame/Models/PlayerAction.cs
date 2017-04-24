@@ -25,6 +25,7 @@ namespace TB_QuestGame
         PlayerTreasure,
         PlayerLocationsVisited,
         ListMapLocations,
+        ListGameObjects,
         ListItems,
         ListTreasures,
         Exit

@@ -134,20 +134,32 @@ namespace TB_QuestGame
             bool validResponse = false;
             integerChoice = 0;
 
+            //
+            //validate on range if either minimumValue and MaximumVAlue are not 0 
+            //
+            bool validateRange = (minimumValue != 0 || maximumValue != 0);
+
             DisplayInputBoxPrompt(prompt);
             while (!validResponse)
             {
                 if (int.TryParse(Console.ReadLine(), out integerChoice))
                 {
-                    if (integerChoice >= minimumValue && integerChoice <= maximumValue)
+                    if (validateRange)
                     {
-                        validResponse = true;
+                        if (integerChoice >= minimumValue && integerChoice <= maximumValue)
+                        {
+                            validResponse = true;
+                        }
+                        else
+                        {
+                            ClearInputBox();
+                            DisplayInputErrorMessage($"You must enter an integer value between {minimumValue} and {maximumValue}. Please try again.");
+                            DisplayInputBoxPrompt(prompt);
+                        }
                     }
                     else
                     {
-                        ClearInputBox();
-                        DisplayInputErrorMessage($"You must enter an integer value between {minimumValue} and {maximumValue}. Please try again.");
-                        DisplayInputBoxPrompt(prompt);
+                        validResponse = true;
                     }
                 }
                 else
@@ -640,6 +652,58 @@ namespace TB_QuestGame
             return mapLocationId;
         }
 
+        public int DisplayGetGameObjectToLookAt()
+        {
+            int gameObjectId = 0;
+            bool validGamerObjectId = false;
+
+            //
+            // get a list of game objects in the current map location
+            //
+            List<GameObject> gameObjectsInMapLocation = _gameKingdom.GetGameObjectsByMapLocationId(_gamePlayer.MapLocationID);
+
+            if (gameObjectsInMapLocation.Count > 0)
+            {
+                DisplayGamePlayScreen("Look at an Object", Text.GameObjectsChooseList(gameObjectsInMapLocation), ActionMenu.MainMenu, "");
+
+                while (!validGamerObjectId)
+                {
+                    //
+                    // get an integer from the player
+                    //
+                    GetInteger($"Enter the Id number of the object you wish to look at: ", 0, 0, out gameObjectId);
+
+                    //
+                    // validate integer as a valid game object id and in current location
+                    //
+                    if (_gameKingdom.IsValidGameObjectByLocationId(gameObjectId, _gamePlayer.MapLocationID))
+                    {
+                        validGamerObjectId = true;
+                    }
+                    else
+                    {
+                        ClearInputBox();
+                        DisplayInputErrorMessage("It appears you entered an invalid game object id. Please try again.");
+                    }
+                }
+            }
+            else
+            {
+                DisplayGamePlayScreen("Look at an Object", "It appears there are no game objects here.", ActionMenu.MainMenu, "");
+            }
+
+            return gameObjectId;
+        }
+
+        //
+        // display object info
+        //
+
+        public void DisplayGameObjectInfo(GameObject gameObject)
+        {
+            DisplayGamePlayScreen("Current Location", Text.LookAt(gameObject), ActionMenu.MainMenu, "");
+        }
+
         //
         // Display locations visited
         //
@@ -665,6 +729,10 @@ namespace TB_QuestGame
             DisplayGamePlayScreen("Player Information", Text.TravelerInfo(_gamePlayer), ActionMenu.MainMenu, "");
         }
 
+        public void DisplayListOfAllGameObjects()
+        {
+            DisplayGamePlayScreen("List: Game Objects", Text.ListAllGameObjects(_gameKingdom.GameObjects), ActionMenu.MainMenu, "");
+        }
         #endregion
 
         #endregion
