@@ -55,6 +55,11 @@ namespace TB_QuestGame
             _gameConsoleView = new ConsoleView(_gamePlayer, _gameKingdom);
             _playingGame = true;
 
+            //
+            //add initial items to player inventory
+            //
+            _gamePlayer.Inventory.Add(_gameKingdom.GetGameObjectById(12) as PlayerObject);
+
             _gamePlayer.MapLocationID = 1;
 
             Console.CursorVisible = false;
@@ -175,6 +180,10 @@ namespace TB_QuestGame
                         ActionMenu.currentMenu = ActionMenu.CurrentMenu.MainMenu;
                         _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrentLocationInfo
                             (_currentLocation), ActionMenu.MainMenu, "");
+                        break;
+
+                    case PlayerAction.Inventory:
+                        _gameConsoleView.DisplayInventory();
                         break;
 
                     case PlayerAction.Exit:

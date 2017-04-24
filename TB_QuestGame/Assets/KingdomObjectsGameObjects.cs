@@ -108,6 +108,15 @@ namespace TB_QuestGame
                 Description = "This blood is believed to have come from an important ancestor of the elves. " +
                 "Bearers of the Elderblood are said to be able to travel through time and space at will.  ",
                 Type = PlayerObjectType.Quest
+            },
+                        new PlayerObject
+            {
+                Id = 12,
+                Name = "Ancient Crown",
+                MapLocationId = 0,
+                Description = "The crown that long ago was worn by the king who lead all of the races. " +
+                "There are four empty slots for jewels from each of the races meant to represent unity under one leader.  ",
+                Type = PlayerObjectType.Quest
             }
         };
     }

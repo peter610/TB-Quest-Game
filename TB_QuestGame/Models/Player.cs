@@ -34,7 +34,8 @@ namespace TB_QuestGame
         private int _health;
         private int _lives;
         private List<int> _mapLocationsVisited;
-
+        private List<PlayerObject> _inventory;
+        
         #endregion
 
         #region PROPERTIES
@@ -87,6 +88,12 @@ namespace TB_QuestGame
             set { _mapLocationsVisited = value; }
         }
 
+        public List<PlayerObject> Inventory
+        {
+            get { return _inventory; }
+            set { _inventory = value; }
+        }
+
         #endregion
 
         #region CONSTRUCTORS
@@ -94,11 +101,13 @@ namespace TB_QuestGame
         public Player()
         {
             _mapLocationsVisited = new List<int>();
+            _inventory = new List<PlayerObject>();
         }
 
         public Player(string name, RaceType race, int mapLocationID) : base(name, race, mapLocationID)
         {
             _mapLocationsVisited = new List<int>();
+            _inventory = new List<PlayerObject>();
         }
 
         public Player(string petName, PlayerProfession profession, int petAge)

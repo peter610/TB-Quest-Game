@@ -744,6 +744,11 @@ namespace TB_QuestGame
         {
             DisplayGamePlayScreen("List: Game Objects", Text.ListAllGameObjects(_gameKingdom.GameObjects), ActionMenu.AdminMenu, "");
         }
+
+        public void DisplayInventory()
+        {
+            DisplayGamePlayScreen("Current Inventory", Text.CurrentInventory(_gamePlayer.Inventory), ActionMenu.MainMenu, "");
+        }
         #endregion
 
         #endregion
