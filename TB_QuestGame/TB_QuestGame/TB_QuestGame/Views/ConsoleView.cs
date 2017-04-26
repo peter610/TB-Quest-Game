@@ -706,57 +706,113 @@ namespace TB_QuestGame
             return gameObjectId;
         }
 
-        //public int DisplayGetTravelerObjectToPickUp()
-        //{
-        //    int gameObjectId = 0;
-        //    bool validGameObjectId = false;
+        public int DisplayGetPlayerObjectToPickUp()
+        {
+            int gameObjectId = 0;
+            bool validGameObjectId = false;
 
-        //    //
-        //    // get a list of player objects in the current map location
-        //    //
-        //    List<PlayerObject> playerObjectsInMapLocation = _gameKingdom.GetPlayerObjectsByMapLocationId(_gamePlayer.MapLocationID);
+            //
+            // get a list of player objects in the current map location
+            //
+            List<PlayerObject> playerObjectsInMapLocation = _gameKingdom.GetPlayerObjectsByMapLocationId(_gamePlayer.MapLocationID);
 
-        //    if (playerObjectsInMapLocation.Count > 0)
-        //    {
-        //        DisplayGamePlayScreen("Pick Up Game Object", Text.GameObjectsChooseList(playerObjectsInMapLocation), ActionMenu.MainMenu, "");
+            if (playerObjectsInMapLocation.Count > 0)
+            {
+                DisplayGamePlayScreen("Pick Up Game Object", Text.GameObjectsChooseList(playerObjectsInMapLocation), ActionMenu.MainMenu, "");
 
-        //        while (!validGameObjectId)
-        //        {
-        //            //
-        //            // get an integer from the player
-        //            //
-        //            GetInteger($"Enter the Id number of the object you wish to add to your inventory: ", 0, 0, out gameObjectId);
+                while (!validGameObjectId)
+                {
+                    //
+                    // get an integer from the player
+                    //
+                    GetInteger($"Enter the Id number of the object you wish to add to your inventory: ", 0, 12, out gameObjectId);
 
-        //            //
-        //            // validate integer as a valid game object id and in current location
-        //            //
-        //            if (_gameKingdom.IsValidPlayerObjectByLocationId(gameObjectId, _gamePlayer.MapLocationID))
-        //            {
-        //                PlayerObject playerObject = _gameKingdom.GetGameObjectById(gameObjectId) as PlayerObject;
-        //                if (playerObject.CanInventory)
-        //                {
-        //                    validGameObjectId = true;
-        //                }
-        //                else
-        //                {
-        //                    ClearInputBox();
-        //                    DisplayInputErrorMessage("It appears you may not inventory that object. Please try again.");
-        //                }
-        //            }
-        //            else
-        //            {
-        //                ClearInputBox();
-        //                DisplayInputErrorMessage("It appears you entered an invalid game object id. Please try again.");
-        //            }
-        //        }
-        //    }
-        //    else
-        //    {
-        //        DisplayGamePlayScreen("Pick Up Game Object", "It appears there are no game objects here.", ActionMenu.MainMenu, "");
-        //    }
+                    //
+                    // validate integer as a valid game object id and in current location
+                    //
+                    if (_gameKingdom.IsValidPlayerObjectByLocationId(gameObjectId, _gamePlayer.MapLocationID))
+                    {
+                        PlayerObject playerObject = _gameKingdom.GetGameObjectById(gameObjectId) as PlayerObject;
+                        validGameObjectId = true;
+                        //if (playerObject.CanInventory)
+                        //{
+                        //    validGameObjectId = true;
+                        //}
+                        //else
+                        //{
+                        //    ClearInputBox();
+                        //    DisplayInputErrorMessage("It appears you may not inventory that object. Please try again.");
+                        //}
+                    }
+                    else
+                    {
+                        ClearInputBox();
+                        DisplayInputErrorMessage("It appears you entered an invalid game object id. Please try again.");
+                    }
+                }
+            }
+            else
+            {
+                DisplayGamePlayScreen("Pick Up Game Object", "It appears there are no game objects here.", ActionMenu.MainMenu, "");
+            }
 
-        //    return gameObjectId;
-        //}
+            return gameObjectId;
+        }
+
+        public void DisplayConfirmPlayerObjectAddedToInventory(PlayerObject objectAddedToInventory)
+        {
+            DisplayGamePlayScreen("Pick Up Game Object", $"The {objectAddedToInventory.Name} " + 
+            "has been added to your inventory.", ActionMenu.MainMenu, "");
+        }
+
+        public int DisplayGetInventoryObjectToPutDown()
+        {
+            int playerObjectId = 0;
+            bool validInventoryObjectId = false;
+
+            if (_gamePlayer.Inventory.Count > 0)
+            {
+                DisplayGamePlayScreen("Put Down Game Object", Text.GameObjectsChooseList(_gamePlayer.Inventory), ActionMenu.MainMenu, "");
+
+                while (!validInventoryObjectId)
+                {
+                    //
+                    // get an integer from the player
+                    //
+                    GetInteger($"Enter the Id number of the object you wish to remove from your inventory: ", 0, 12, out playerObjectId);
+
+                    //
+                    // find object in inventory
+                    // 
+                    //
+                    PlayerObject objectToPutDown = _gamePlayer.Inventory.FirstOrDefault(o => o.Id == playerObjectId);
+
+                    //
+                    // validate object in inventory
+                    //
+                    if (objectToPutDown != null)
+                    {
+                        validInventoryObjectId = true;
+                    }
+                    else
+                    {
+                        ClearInputBox();
+                        DisplayInputErrorMessage("It appears you entered the Id of an object not in the inventory. Please try again.");
+                    }
+                }
+            }
+            else
+            {
+                DisplayGamePlayScreen("Pick Up Game Object", "It appears there are no objects currently in inventory.", ActionMenu.MainMenu, "");
+            }
+
+            return playerObjectId;
+        }
+
+        public void DisplayConfirmPlayerObjectRemovedFromInventory(PlayerObject objectRemovedFromInventory)
+        {
+            DisplayGamePlayScreen("Put Down Game Object", $"The {objectRemovedFromInventory.Name} has been removed from your inventory.", ActionMenu.MainMenu, "");
+        }
 
         //
         // display object info
