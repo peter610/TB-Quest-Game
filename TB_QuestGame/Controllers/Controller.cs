@@ -186,6 +186,14 @@ namespace TB_QuestGame
                         _gameConsoleView.DisplayInventory();
                         break;
 
+                    case PlayerAction.PickUp:
+                        PickUpAction();
+                        break;
+
+                    case PlayerAction.PutDown:
+                        PutDownAction();
+                        break;
+
                     case PlayerAction.Exit:
                         _playingGame = false;
                         break;
@@ -226,6 +234,67 @@ namespace TB_QuestGame
                 //
                 _gameConsoleView.DisplayGameObjectInfo(gameObject);
             }
+        }
+
+        /// <summary>
+        /// process the Pick Up action
+        /// </summary>
+        private void PickUpAction()
+        {
+            //
+            // display a list of player objects in map location and get a player choice
+            //
+            int playerObjectToPickUpId = _gameConsoleView.DisplayGetPlayerObjectToPickUp();
+
+            //
+            // add the player object to player's inventory
+            //
+            if (playerObjectToPickUpId != 0)
+            {
+                //
+                // get the game object from the kingdom
+                //
+                PlayerObject playerObject = _gameKingdom.GetGameObjectById(playerObjectToPickUpId) as PlayerObject;
+
+                //
+                // note: player object is added to list and the map location is set to 0
+                //
+                _gamePlayer.Inventory.Add(playerObject);
+                playerObject.MapLocationId = 0;
+
+                //
+                // display confirmation message
+                //
+                _gameConsoleView.DisplayConfirmPlayerObjectAddedToInventory(playerObject);
+            }
+        }
+
+        /// <summary>
+        /// Process the put down action
+        /// </summary>
+        private void PutDownAction()
+        {
+            //
+            // display a list of player objects in inventory and get a player choice
+            //
+            int inventoryObjectToPutDownId = _gameConsoleView.DisplayGetInventoryObjectToPutDown();
+
+            //
+            // get the game object from the fingdom
+            //
+            PlayerObject playerObject = _gameKingdom.GetGameObjectById(inventoryObjectToPutDownId) as PlayerObject;
+
+            //
+            // remove the object from inventory and set the map location to the current value
+            //
+            _gamePlayer.Inventory.Remove(playerObject);
+            playerObject.MapLocationId = _gamePlayer.MapLocationID;
+
+            //
+            // display confirmation message
+            //
+            _gameConsoleView.DisplayConfirmPlayerObjectRemovedFromInventory(playerObject);
+
         }
 
         /// <summary>
